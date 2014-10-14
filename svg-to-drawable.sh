@@ -19,9 +19,10 @@ inkscape_dpi=
 inkscape_input=
 inkscape_output=
 output_prefix=
+output_surfix=
 color=
 
-while getopts s:w:h:d:i:o:p:c: opt; do
+while getopts s:w:h:d:i:o:p:f:c: opt; do
   case $opt in
   s)
     inkscape_size=$OPTARG
@@ -44,6 +45,9 @@ while getopts s:w:h:d:i:o:p:c: opt; do
   p)
     output_prefix=$OPTARG
     ;;
+  f)
+    output_surfix=$OPTARG
+    ;;
   c)
     color=$OPTARG
     ;;
@@ -57,6 +61,7 @@ done
 : ${inkscape_input:=$DIR}
 : ${inkscape_output:=$DIR}
 : ${output_prefix:=""}
+: ${output_surfix:=""}
 : ${color:="#cccccc"}
 
 ################################################
@@ -67,7 +72,7 @@ for file in ${inkscape_input%%/}/*.svg; do
   extension="${filename##*.}"
   filename="${filename%.*}"
   filename="${filename//-/_}"
-  output_dir="${inkscape_output%%/}/$output_prefix$filename.png"
+  output_dir="${inkscape_output%%/}/$output_prefix$filename$output_surfix.png"
   
   $($INKSCAPE_DIR $file -e $output_dir -w $inkscape_width -h $inkscape_height)
   # echo "$INKSCAPE_DIR $file -e $output_dir -w $inkscape_width -h $inkscape_height"
@@ -82,9 +87,9 @@ done
 # ./svg-to-drawable.sh -s 48 -p "ic_action_" -i /Volumes/iMac/workspace/android/resources/material-polymer-icons/svg -o /Volumes/iMac/workspace/android/resources/material-polymer-icons/origin/drawable-hdpi
 # ./svg-to-drawable.sh -s 32 -p "ic_action_" -i /Volumes/iMac/workspace/android/resources/material-polymer-icons/svg -o /Volumes/iMac/workspace/android/resources/material-polymer-icons/origin/drawable-mdpi
 
-# ./svg-to-drawable.sh -s 192 -p "ic_action_" -i /Volumes/iMac/workspace/android/resources/material-polymer-icons/svg -o /Volumes/iMac/workspace/android/resources/material-polymer-icons/2x-origin/drawable-xxhdpi
-# ./svg-to-drawable.sh -s 128 -p "ic_action_" -i /Volumes/iMac/workspace/android/resources/material-polymer-icons/svg -o /Volumes/iMac/workspace/android/resources/material-polymer-icons/2x-origin/drawable-xhdpi
-# ./svg-to-drawable.sh -s 96 -p "ic_action_" -i /Volumes/iMac/workspace/android/resources/material-polymer-icons/svg -o /Volumes/iMac/workspace/android/resources/material-polymer-icons/2x-origin/drawable-hdpi
-# ./svg-to-drawable.sh -s 64 -p "ic_action_" -i /Volumes/iMac/workspace/android/resources/material-polymer-icons/svg -o /Volumes/iMac/workspace/android/resources/material-polymer-icons/2x-origin/drawable-mdpi
+# ./svg-to-drawable.sh -s 192 -p "ic_action_" -f "_2x" -i /Volumes/iMac/workspace/android/resources/material-polymer-icons/svg -o /Volumes/iMac/workspace/android/resources/material-polymer-icons/2x-origin/drawable-xxhdpi
+# ./svg-to-drawable.sh -s 128 -p "ic_action_" -f "_2x" -i /Volumes/iMac/workspace/android/resources/material-polymer-icons/svg -o /Volumes/iMac/workspace/android/resources/material-polymer-icons/2x-origin/drawable-xhdpi
+# ./svg-to-drawable.sh -s 96 -p "ic_action_" -f "_2x" -i /Volumes/iMac/workspace/android/resources/material-polymer-icons/svg -o /Volumes/iMac/workspace/android/resources/material-polymer-icons/2x-origin/drawable-hdpi
+# ./svg-to-drawable.sh -s 64 -p "ic_action_" -f "_2x" -i /Volumes/iMac/workspace/android/resources/material-polymer-icons/svg -o /Volumes/iMac/workspace/android/resources/material-polymer-icons/2x-origin/drawable-mdpi
 
 
